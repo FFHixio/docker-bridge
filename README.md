@@ -14,7 +14,8 @@ The Bridge is available as a [Docker image](https://hub.docker.com/r/ngnjs/bridg
    remote procedure call "API". This provides "remote" functions for Node.js, allowing
    applications to seamlessly interact with the Bridge.
    
-1. **Server-Sent Events**:
+1. **Server-Sent Events**: It is possible to connect to the bridge through a read-only
+   web interface, using [SSE](https://en.wikipedia.org/wiki/Server-sent_events). Details available in the _Basic Startup_ section.
 
 ## Usage
 
