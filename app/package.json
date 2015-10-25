@@ -4,7 +4,7 @@
   "description": "A message queue and distribution system built on ZeroMQ and Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "snazzy --verbose"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,25 @@
   "bugs": {
     "url": "https://github.com/ngnjs/ngn-bridge-app/issues"
   },
-  "homepage": "https://github.com/ngnjs/ngn-bridge-app#readme"
+  "homepage": "https://github.com/ngnjs/ngn-bridge-app#readme",
+  "dependencies": {
+    "ngn": "^0.2.67",
+    "ngn-sse": "0.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.3",
+    "snazzy": "^2.0.1",
+    "standard": "^5.3.1"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "_*",
+      "_**/*"
+    ],
+    "globals": [
+      "NGN",
+      "ngn"
+    ]
+  }
 }
