@@ -57,21 +57,23 @@ using a standard Linux account (username/password) or RSA keys (`id_rsa`).
 This is a feature of the [NGN SDK](http://github.com/ngnjs/ngn), which contains full details. The short version:
 
 ```js
-NGN.BUS.connect({
-  host: 'myserver.com', // or myserver.com:custom_port
-  ssh: {
-    port: 22,
-    username: 'username',
-    password: 'password'
+NGN.BUS.connect('myserver.com', // or myserver.com:custom_port
+  {
+    ssh: {
+      port: 22,
+      username: 'username',
+      password: 'password'
+    }
   }
-})
+)
 
 // ----- OR -----
-NGN.BUS.connect({
-  host: 'myserver.com', // or myserver.com:custom_port
-  ssh: {
-    port: 22,
-    key: require('fs').readFileSync('/path/to/id_rsa')
+NGN.BUS.connect('myserver.com', // or myserver.com:custom_port
+  {
+    ssh: {
+      port: 22,
+      key: require('fs').readFileSync('/path/to/id_rsa')
+    }
   }
-})
+)
 ```
