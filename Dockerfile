@@ -9,11 +9,11 @@ WORKDIR /app
 RUN apk add --update zeromq zeromq-dev pkgconfig python gcc g++ make bash \
     && mkdir -p /node_modules \
     && cd /node_modules \
-    && npm i zmq ngn ngn-sse \
+    && npm i zmq ngn@0.2.81 ngn-sse \
     && cd /app \
     && apk del zeromq-dev pkgconfig python gcc g++ make
 
-EXPOSE 5555
+EXPOSE 5555 55555
 
 CMD ["/bin/bash"]
 #CMD ["node","index.js"]

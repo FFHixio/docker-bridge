@@ -2,6 +2,8 @@
 
 require('ngn')
 
+NGN.BUS.disableRemote()
+
 // Create a socket
 let zmq = require('zmq')
 
@@ -26,9 +28,10 @@ let controller = new Controller(pub, sub)
 
 // Setup the RPC server
 let server = new NGN.rpc.Server({
-  port: process.env.RPC_PORT,
-  export: {
-    emit: controller.send
+  port:  parseInt(process.env.RPC_PORT),
+  expose: {
+    send: controller.send,
+    subscribe: controller.subscribe
   }
 })
 
@@ -36,22 +39,3 @@ let server = new NGN.rpc.Server({
 server.on('ready', function () {
   console.log('Accepting RPC requests on port', process.env.RPC_PORT)
 })
-
-setInterval(function () {
-  console.log('sending a multipart message envelope')
-  pub.send(['kitty cats', '{"cat says": "meow!"}'])
-}, 1500)
-
-let EventSource = require('eventsource')
-let es = new EventSource('http://localhost:' + process.env.WEB_PORT + '/sse')
-
-es.addEventListener('kitty cats', function(){
-  console.log('KITTY KATS RULE!', arguments)
-});
-
-es.onmessage = function(e) {
-  console.log("RECEIVED",e.data);
-};
-es.onerror = function() {
-  console.log('ERROR!');
-};

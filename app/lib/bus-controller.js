@@ -2,12 +2,15 @@
 
 let http = require('http')
 let SSE = require('ngn-sse')
+// let crypto = require('crypto')
 
 process.env.WEB_PORT = process.env.WEB_PORT || 55555
+process.env.SSE_PATH = process.env.SSE_PATH || '/sse'
 
 module.exports = function (pub, sub) {
   // Store the client connections
   let clients = []
+//  let tokens = []
 
   // Create a web server
   let server = http.createServer(function (req, res) {
@@ -17,7 +20,9 @@ module.exports = function (pub, sub) {
 
   // Launch the web server and apply SSE
   server.listen(process.env.WEB_PORT, function () {
-    let sse = new SSE(server)
+    let sse = new SSE(server, {
+      path: process.env.SSE_PATH
+    })
 
     sse.on('connection', function (client) {
       clients.push(client)
@@ -36,58 +41,28 @@ module.exports = function (pub, sub) {
     })
   })
 
-  this.send = function (topic, payload) {
+  this.send = function (topic, payload, callback) {
+    if (!callback) {
+      if (typeof payload === 'function') {
+        console.warn('No callback specified in client initiated send() method.')
+        callback = payload
+        payload = null
+      }
+    }
     if (typeof payload === 'object'){
       payload = JSON.stringify(payload)
     }
     pub.send([topic, payload])
+    callback && callback(null)
   }
-
-//  let emitter = new EventEmitter()
-//  let topics = []
-//
-//  emitter.getListeners = function () {
-//    return topics.filter(function (topic,i) {
-//      return topics.indexOf(topic) === i
-//    })
-//  }
-//
-//  // Override the emit method
-//  emitter.send = function (topic, payload) {
-//    if (typeof payload === 'object'){
-//      payload = JSON.stringify(payload)
-//    }
-//    pub.send([topic, payload])
-//  }
-//
-//  // When a new listener is added, add it to the topics
-//  // list so it is not filtered.
-//  emitter.on('newListener', function (topic, listener) {
-//    listener = listener || function () {}
-//    topics.push(topic)
-//    topics.push(checksum(listener.toString()))
-//    sub.subscribe(topic)
-//  })
-//
-//  // When a listener is removed, remove it from the topics
-//  // list so it is filtered.
-//  emitter.on('removeListener', function (topic, listener) {
-//    listener = listener || function(){}
-//    topics = topics.splice(topics.lastIndexOf(topic),1)
-//    topics = topics.splice(topics.lastIndexOf(checksum(listener.toString())),1)
-//  })
-//
-//  // When zeromq emits a message, send it to the client
-//  // if the client is subscribed to the topic.
-//  sub.on("message", function (topic, payload) {
-//    if (topics.indexOf(topic.toString()) >= 0){
-//      payload = payload.toString()
-//      try {
-//        payload = JSON.parse(payload)
-//      } catch(e){}
-//      emitter.emit(topic, payload)
-//    }
-//  })
-//
-//  return emitter
+  
+  this.subscribe = function(callback) {
+    // Generate a token
+//    let token = crypto.createHash('md5').update((new Date()).getTime()).digest('hex')
+//    tokens.push(token)
+    callback && callback(null, {
+      port: process.env.WEB_PORT,
+      path: process.env.SSE_PATH
+    })
+  }
 }
