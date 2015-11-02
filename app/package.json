@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/ngnjs/ngn-bridge-app#readme",
   "dependencies": {
-    "ngn": "^0.2.75",
     "ngn-sse": "0.0.1"
   },
   "devDependencies": {

@@ -4,19 +4,22 @@ MAINTAINER Corey Butler
 # Set the working directory
 VOLUME ["/app"]
 WORKDIR /app
+ADD ./app /app
 
 # Add Dependencies
 RUN apk add --update zeromq zeromq-dev pkgconfig python gcc g++ make bash \
     && mkdir -p /node_modules \
     && cd /node_modules \
-    && npm i zmq ngn@0.2.81 ngn-sse \
+    && npm install zmq ngn@0.2.81 ngn-sse \
     && cd /app \
-    && apk del zeromq-dev pkgconfig python gcc g++ make
+    && npm install \
+    && apk del zeromq-dev pkgconfig python gcc g++ make bash
+
 
 EXPOSE 5555 55555
 
-CMD ["/bin/bash"]
-#CMD ["node","index.js"]
+#CMD ["/bin/bash"]
+CMD ["node","index.js"]
 
 #ADD gnatsd /gnatsd
 #ADD gnatsd.conf /gnatsd.conf
