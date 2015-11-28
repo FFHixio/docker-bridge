@@ -3,3 +3,4 @@
 _*
 *.md
 .log
+node_modules

@@ -1,5 +1,5 @@
 'use strict'
-
+console.log(process.env.DOCKER_HOST)
 require('ngn')
 
 NGN.BUS.disableRemote()
@@ -20,15 +20,15 @@ pub.bindSync('tcp://127.0.0.1:' + process.env.MQ_PORT)
 // Connect the subscriber
 sub.connect('tcp://127.0.0.1:' + process.env.MQ_PORT)
 
-sub.subscribe('kitty cats');
+sub.subscribe('kitty cats')
 
 // Setup the controller
-let Controller = require('./lib/bus-controller')
+let Controller = require('./lib/controller')
 let controller = new Controller(pub, sub)
 
 // Setup the RPC server
 let server = new NGN.rpc.Server({
-  port:  parseInt(process.env.RPC_PORT),
+  port: parseInt(process.env.RPC_PORT, 10),
   expose: {
     send: controller.send,
     subscribe: controller.subscribe

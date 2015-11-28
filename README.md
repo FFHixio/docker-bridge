@@ -28,12 +28,11 @@ each other to create a network.
 ### Basic Startup
 
 ```
-docker run -d --name ngn-bridge -p 5555:5555 -p 81:55555 ngnjs/bridge
+docker run -d --name ngn-bridge -p 5555:5555 -p 443:443 ngnjs/bridge
 ```
 
 This command will run the bridge as a daemon (`-d`), named _ngn-bridge_, available on
-port 5555 (`-p 5555:5555`). It also makes a read-only web server available at [http://myserver.com:8181]() (`-p 81:555555`) by mapping public port `81` to the 
-private `55555` container port. Web pages can use the browser's native [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) to listen to the Bridge. This is also how the [NGN.BUS]() "hears" events
+port 5555 (`-p 5555:5555`). It also makes a read-only web server available at [https://myserver.com]() (`-p 443:443`) by mapping public port `443` to the private `443` container port. Web pages can use the browser's native [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) to listen to the Bridge. This is also how the [NGN.BUS]() "hears" events
 from the server by default.
 
 To use this in an application, use the [NGN SDK](http://github.com/ngnjs/ngn). Let's say this server's domain name is `myserver.com`. 
