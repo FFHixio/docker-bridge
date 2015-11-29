@@ -2,7 +2,7 @@
 
 let RequestLocation = require('./location')
 let CreateSecuritySystem = require('./ssl')
-let WebServer = require('./web')
+let WebServer = require('./web/web')
 let webinfo = {}
 let server
 
@@ -23,7 +23,7 @@ let retrieveGeoLocation = function () {
     }
   })
 }
-  
+
 module.exports = function (pub, sub) {
   // 1. Attempt to identify server location for SSL cert
   RequestLocation(function (location) {
@@ -42,7 +42,7 @@ module.exports = function (pub, sub) {
       webinfo = location || {}
 
       // If the geolocation data cannot be acquired immediately, try again.
-      if (Object.keys(webinfo).length === 0){
+      if (Object.keys(webinfo).length === 0) {
         setTimeout(retrieveGeoLocation, 7000) // Try again in 7 seconds
       }
     })
@@ -56,17 +56,17 @@ module.exports = function (pub, sub) {
         payload = null
       }
     }
-    if (typeof payload === 'object'){
+    if (typeof payload === 'object') {
       payload = JSON.stringify(payload)
     }
     pub.send([topic, payload])
     callback && callback(null)
   }
-  
+
   this.subscribe = function (callback) {
     // Generate a token
-//    let token = crypto.createHash('md5').update((new Date()).getTime()).digest('hex')
-//    tokens.push(token)
+    //    let token = crypto.createHash('md5').update((new Date()).getTime()).digest('hex')
+    //    tokens.push(token)
     callback && callback(null, webinfo)
   }
 }
