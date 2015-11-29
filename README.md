@@ -1,6 +1,7 @@
 # NGN Bridge
 
 [![](https://badge.imagelayers.io/ngnjs/bridge:latest.svg)](https://imagelayers.io/?images=ngnjs/bridge:latest 'Get your own badge on imagelayers.io')
+
 This image contains [Alpine Linux](https://alpinelinux.org), [Node.js](http://nodejs.org), [NGN](http://ngn.js.org), and [0MQ](http://zeromq.org).
 
 The NGN Bridge acts as the glue between NGN microservices. It can be thought of
