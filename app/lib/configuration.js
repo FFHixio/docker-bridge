@@ -5,7 +5,7 @@ class Configuration {
     
   }
 
-  retrieve (callback) {
+  retrieve (user, password, callback) {
     callback && callback(null, {
       test: 'test'
     })

@@ -22,6 +22,7 @@ let clients = []
 module.exports = function (ssl, sub, location) {
   let app = express()
 
+  app.sub = sub
   app.webinfo = location || {}
 
   // Create a secure web server
@@ -42,7 +43,7 @@ module.exports = function (ssl, sub, location) {
   Router(app)
 
   // Add websocket support
-  WebSocket(server, sub)
+  WebSocket(app, server)
 
   // Launch the web server and apply SSE
   server.listen(443, function () {

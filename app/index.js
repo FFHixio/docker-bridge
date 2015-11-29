@@ -9,6 +9,7 @@ let zmq = require('zmq')
 
 process.env.MQ_PORT = process.env.MQ_PORT || 54321
 process.env.RPC_PORT = process.env.RPC_PORT || 5555
+process.env.BRIDGE_VERSION = require('./package.json').version
 
 // Setup the message queue publisher/subscriber
 let pub = zmq.socket('pub')
