@@ -6,6 +6,10 @@ let validTokenDuration = process.env.TOKEN_VALIDITY_DURATION || (3 * 60 * 60 * 1
 module.exports = function (app) {
   return {
     token: function (req, res) {
+      if (!req.credential) {
+        return res.sendStatus(401)
+      }
+
       let credential = req.credential.split(':') // Get the basic auth apply
 
       try {
@@ -31,6 +35,7 @@ module.exports = function (app) {
         }
         return res.sendStatus(401)
       } catch (e) {
+        console.log(e)
         res.sendStatus(401)
       }
     }

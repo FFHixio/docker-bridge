@@ -10,6 +10,7 @@ let SSE = require('ngn-sse')
 let Security = require('./security')
 let Router = require('./router')
 let WebSocket = require('./ws')
+let etcd = require('etcdjs')
 let time = (new Date()).getTime().toString()
 
 process.env.SSE_PATH = process.env.SSE_PATH || '/' + crypto.createHash('md5').update(time).digest('hex')

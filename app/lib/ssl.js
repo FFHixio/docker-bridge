@@ -12,7 +12,7 @@ module.exports = function (options, callback) {
     locality: process.env.CITY || options.city || 'Austin',
     organization: process.env.ORGANIZATION || 'NGN',
     organizationUnit: process.env.ORGANIZATIONUNIT || 'Bridge',
-    commonName: process.env.COMMONNAME || 'ngnbridge',
+    commonName: '192.168.99.100', // process.env.COMMONNAME || 'ngnbridge',
     emailAddress: process.env.ADMINEMAIL || 'noreply@' + (options.ip || 'domain.com')
   }
 
@@ -25,14 +25,14 @@ module.exports = function (options, callback) {
         selfSigned: true,
         serviceKey: sslconfig.clientKey,
         csr: csroutput.csr
-      }, function(err, cert){
+      }, function (err, cert) {
         if (err) throw err
         console.log('SSL certificate ready.')
         callback({
           key: sslconfig.clientKey,
           cert: cert.certificate
         })
-      })  
+      })
     })
   })
 }

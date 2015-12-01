@@ -26,7 +26,7 @@ module.exports = function (app) {
   let cfg = require('./api/configuration')(app)
 
   // Token Exchange
-  app.get('/oauth/token', oauth.token)
+  app.get('/oauth/token', function (req, r, n) { console.log('breakpoint'); n() }, oauth.token)
 
   // Authorize all configuration endpoints
   let cfgAvail = configurationAvailable(app)
